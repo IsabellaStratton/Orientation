@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Device Orientation API</title>
+  <meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+  
+      <link rel="stylesheet" href="style.css">
+
+  
+</head>
+
+<body>
+  <div class="col">
+  <div class="row" id="frame">Frame coordinates</div>
+  <div class="row">
+    <div class="col strech">
+      <i id="x-icon" class="fa fa-mobile"></i>
+      <div class="value">X: <span id="x">N/A</span></div>
+    </div>
+    
+    
+    
+    <div class="col strech">
+       <i id="y-icon" class="fa fa-mobile"></i>
+      <div class="value">Y: <span id="y">N/A</span></div>
+    </div>
+    
+  </div>
+ 
+</div>
+
+<br>
+</br>
+
+<button  style="font-family:'Trebuchet MS', Arial, Helvetica, sans-serif; height:7vw; width:19vw; font-size:2vw" onclick="getLocation()">Click me to get your location</button>
+
+<div id="mapholder"></div>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+    var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
+    +latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU";
+    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+</script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js'></script>
+
+    <script src="index.js"></script>
+
+</body>
+</html>
